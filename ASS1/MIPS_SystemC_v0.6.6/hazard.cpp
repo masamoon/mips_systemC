@@ -17,7 +17,8 @@ void hazard::detect_hazard()
 		reset_idexe.write(true);
 	}
 	else {
-	        enable_pc.write(true);
+	    
+	    enable_pc.write(true);
 		enable_ifid.write(true);
 		reset_idexe.write(false);
 	}

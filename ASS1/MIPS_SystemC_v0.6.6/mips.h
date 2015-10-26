@@ -66,6 +66,9 @@ SC_MODULE(mips) {
    orgate *or_reset_idexe;
    hazard *hazard_unit;
 
+   //ID2 
+
+   
    //EXE
    alu               *alu1;      // ALU
    mux< sc_uint<32> > *m1;       // selects 2nd ALU operand

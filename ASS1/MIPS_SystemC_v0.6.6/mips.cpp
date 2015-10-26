@@ -59,7 +59,11 @@ void mips::buildID(void)
 
       // Selects Register to Write
       mr = new mux< sc_uint<5> > ("muxRDst");
-   
+
+      //TODO: instiatiate subtractor
+
+
+      //
       mr->sel(RegDst);
       mr->din0(rt);
       mr->din1(rd);
@@ -104,6 +108,7 @@ void mips::buildID(void)
 /*Build ID2*/ 
 void mips::buildID2(void)
 {
+
      
 }
 
@@ -209,8 +214,12 @@ void mips::buildArchitecture(void){
 
       buildID();
 
-      //reg_id_id2
+
       
+      reg_id_id2 = new reg_id_id2("reg_id_id2");
+      
+      //ligar portos de entrada do registo reg_id_id2 
+
       buildID2();
 
 
