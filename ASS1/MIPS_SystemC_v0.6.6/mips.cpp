@@ -214,10 +214,21 @@ void mips::buildArchitecture(void){
 
       buildID();
 
-
+      // cheira-me que faltam aqui cenas
       
       reg_id_id2 = new reg_id_id2("reg_id_id2");
+      reg_id_id2->imm_id();
+      reg_id_id2->PC4_id(;
+      reg_id_id2->imm_id2();
+      reg_id_id2->PC4_id2();
+      reg_id_id2->opcode_id();
+      reg_id_id2->opcode_id2();
+      reg_id_id2->funct_id();
+      reg_id_id2->funct_id2();
+  
+
       
+
       //ligar portos de entrada do registo reg_id_id2 
 
       buildID2();
