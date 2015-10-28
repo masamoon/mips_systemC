@@ -217,14 +217,14 @@ void mips::buildArchitecture(void){
       // cheira-me que faltam aqui cenas
       
       reg_id_id2 = new reg_id_id2("reg_id_id2");
-      reg_id_id2->imm_id();
-      reg_id_id2->PC4_id(;
-      reg_id_id2->imm_id2();
-      reg_id_id2->PC4_id2();
-      reg_id_id2->opcode_id();
-      reg_id_id2->opcode_id2();
-      reg_id_id2->funct_id();
-      reg_id_id2->funct_id2();
+      reg_id_id2->imm_id(imm_id);
+      reg_id_id2->PC4_id(PC4_id);
+      reg_id_id2->imm_id2(imm_id2);
+      reg_id_id2->PC4_id2(PC4_id2);
+      reg_id_id2->opcode_id(opcode_id);
+      reg_id_id2->opcode_id2(opcode_id2);
+      reg_id_id2->funct_id(funct_id);
+      reg_id_id2->funct_id2(funct_id2);
   
 
       
@@ -364,6 +364,7 @@ mips::~mips(void)
       delete hazard_unit;
       delete or_reset_idexe;
       delete reg_if_id;
+      delete reg_id_id2; 
       delete reg_id_exe;
       delete reg_exe_mem;
       delete reg_mem_wb;

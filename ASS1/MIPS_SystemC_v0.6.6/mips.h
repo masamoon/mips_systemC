@@ -141,7 +141,15 @@ SC_MODULE(mips) {
 
    //ID2
    
-   
+  // sc_in  < sc_uint<32> > imm_id, PC4_id, PC_id;
+   sc_out < sc_uint<32> > imm_id2, PC4_id2, PC_id2; 
+
+   sc_in < sc_uint<6> > opcode_id;
+   sc_out < sc_uint<6> > opcode_id2;
+
+   sc_in < sc_uint<6> >  funct_id;
+   sc_out < sc_uint<6> > funct_id2; 
+
 
 
 
