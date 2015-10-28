@@ -27,6 +27,7 @@
 
 #include "regT.h"
 #include "reg_if_id.h"
+#include "reg_id_id2.h"
 #include "reg_id_exe.h"
 #include "reg_exe_mem.h"
 #include "reg_mem_wb.h"
@@ -84,6 +85,7 @@ SC_MODULE(mips) {
 
    //pipeline registers
    reg_if_id_t       *reg_if_id;
+   reg_id_id2_t      *reg_id_id2; 
    reg_id_exe_t      *reg_id_exe;
    reg_exe_mem_t     *reg_exe_mem;
    reg_mem_wb_t      *reg_mem_wb;
