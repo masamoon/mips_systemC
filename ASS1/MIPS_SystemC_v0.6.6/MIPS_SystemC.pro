@@ -1,6 +1,7 @@
 QT              += qt3support
 TEMPLATE	= app
-CONFIG		+= qt thread release 
+#CONFIG		+= qt thread release
+CONFIG		+= qt thread debug
 HEADERS		= mips.h\
                   imem.h decode.h regfile.h alu.h dmem.h control.h\
 		  mem32.h mux.h reg.h add.h gates.h ext.h shiftl2.h\

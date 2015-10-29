@@ -52,12 +52,12 @@ SC_MODULE(reg_id_id2_t) {
 
 		opcode = new regT< sc_uint<6> > ("opcode");
 		opcode->din(opcode_id);
-		opcode->din(opcode_id2);
+		opcode->dout(opcode_id2);
 		opcode->clk(clk);
 		opcode->enable(enable);
 		opcode->reset(reset);
 
-#if 0
+#if 1
 		PC4 = new regT < sc_uint<32> >("PC4");
 		PC4->din(PC4_id);
 		PC4->dout(PC4_id2);

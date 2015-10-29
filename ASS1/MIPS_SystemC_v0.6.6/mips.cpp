@@ -220,7 +220,7 @@ void mips::buildArchitecture(void){
       // cheira-me que faltam aqui cenas
 
       reg_id_id2 = new reg_id_id2_t("reg_id_id2");
-       #if 0  
+       #if 1  
       reg_id_id2->imm_id(imm_id);
       reg_id_id2->PC4_id(PC4_id);
       reg_id_id2->imm_id2(imm_id2);
