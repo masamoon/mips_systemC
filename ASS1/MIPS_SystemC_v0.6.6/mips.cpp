@@ -57,17 +57,7 @@ void mips::buildID(void)
       dec1->shamt(shamt);
       dec1->funct(funct);
 
-      // Selects Register to Write
-      mr = new mux< sc_uint<5> > ("muxRDst");
-
-      //TODO: instiatiate subtractor
-
-
-      //
-      mr->sel(RegDst);
-      mr->din0(rt);
-      mr->din1(rd);
-      mr->dout(WriteReg);
+     
    
       // Register File
       rfile = new regfile ("regfile");
@@ -84,10 +74,7 @@ void mips::buildID(void)
       rfile->clk(clk);
       rfile->reset(reset);
 
-      // 16 to 32 bit signed Immediate extension
-      e1 = new ext("ext");
-      e1->din(imm);
-      e1->dout(imm_ext);
+     
 
       // Control
       ctrl = new control ("control");
@@ -108,7 +95,21 @@ void mips::buildID(void)
 /*Build ID2*/ 
 void mips::buildID2(void)
 {
+       // Selects Register to Write
+      mr = new mux< sc_uint<5> > ("muxRDst");
 
+      //TODO: instiatiate subtractor
+
+
+      //
+      mr->sel(RegDst);
+      mr->din0(rt);
+      mr->din1(rd);
+      mr->dout(WriteReg);
+       // 16 to 32 bit signed Immediate extension
+      e1 = new ext("ext");
+      e1->din(imm);
+      e1->dout(imm_ext);
      
 }
 
@@ -216,8 +217,8 @@ void mips::buildArchitecture(void){
 
       // cheira-me que faltam aqui cenas
       
-      reg_id_id2 = new reg_id_id2("reg_id_id2");
-      reg_id_id2->imm_id(imm_id);
+      reg_id_id2 = new reg_id_id2_t("reg_id_id2");
+      reg_id_id2->imm_id(imm_ext);
       reg_id_id2->PC4_id(PC4_id);
       reg_id_id2->imm_id2(imm_id2);
       reg_id_id2->PC4_id2(PC4_id2);
@@ -225,6 +226,9 @@ void mips::buildArchitecture(void){
       reg_id_id2->opcode_id2(opcode_id2);
       reg_id_id2->funct_id(funct_id);
       reg_id_id2->funct_id2(funct_id2);
+      reg_id_id2->clk(clk);
+      reg_id_id2->reset(reset);
+      reg_id_id2->enable(enable_idid2);
   
 
       

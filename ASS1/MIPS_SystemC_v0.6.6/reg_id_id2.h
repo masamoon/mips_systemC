@@ -23,8 +23,10 @@ SC_MODULE(reg_id_id2_t) {
 	sc_in  < bool > reset;
 	sc_in  < bool > enable;
 
-	sc_in  < sc_uint<32> > imm_id, PC4_id, PC_id;
-	sc_out < sc_uint<32> > imm_id2, PC4_id2, PC_id2; 
+	sc_in  < sc_uint<32> > PC4_id, PC_id;
+	sc_out < sc_uint<32> > PC4_id2, PC_id2; 
+	sc_in  < sc_uint<32> > imm_id;
+	sc_out  < sc_uint<32> > imm_id2;
 
 	sc_in < sc_uint<6> > opcode_id;
 	sc_out < sc_uint<6> > opcode_id2;

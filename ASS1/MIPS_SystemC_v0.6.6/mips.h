@@ -102,6 +102,7 @@ SC_MODULE(mips) {
    sc_signal <bool> enable_ifid;
 
    //ID
+   sc_signal < sc_uint<16> > imm_id;
    sc_signal < sc_uint<32> > inst_id,  // current instruction ID phase
                              PC4_id;
       
@@ -140,7 +141,7 @@ SC_MODULE(mips) {
 
 
    //ID2
-   
+   sc_signal <bool> enable_idid2;
   // sc_in  < sc_uint<32> > imm_id, PC4_id, PC_id;
    sc_out < sc_uint<32> > imm_id2, PC4_id2, PC_id2; 
 
