@@ -52,7 +52,7 @@ void mips::buildID(void)
       dec1->rs(rs);
       dec1->rt(rt);
       dec1->rd(rd);
-      dec1->imm(imm);
+      dec1->imm(imm_id);
       dec1->opcode(opcode);
       dec1->shamt(shamt);
       dec1->funct(funct);
@@ -106,9 +106,11 @@ void mips::buildID2(void)
       mr->din0(rt);
       mr->din1(rd);
       mr->dout(WriteReg);
+      
        // 16 to 32 bit signed Immediate extension
+      
       e1 = new ext("ext");
-      e1->din(imm);
+      e1->din(imm_id2);
       e1->dout(imm_ext);
      
 }
@@ -216,27 +218,34 @@ void mips::buildArchitecture(void){
       buildID();
 
       // cheira-me que faltam aqui cenas
-      
+
       reg_id_id2 = new reg_id_id2_t("reg_id_id2");
-      reg_id_id2->imm_id(imm_ext);
+       #if 0  
+      reg_id_id2->imm_id(imm_id);
       reg_id_id2->PC4_id(PC4_id);
       reg_id_id2->imm_id2(imm_id2);
       reg_id_id2->PC4_id2(PC4_id2);
+
+      
       reg_id_id2->opcode_id(opcode_id);
       reg_id_id2->opcode_id2(opcode_id2);
       reg_id_id2->funct_id(funct_id);
       reg_id_id2->funct_id2(funct_id2);
+      reg_id_id2->PC_id(PC_id);
+      reg_id_id2->PC_id2(PC_id2);
+      reg_id_id2->valid_id(valid_id);
+      reg_id_id2->valid_id2(valid_id2);
       reg_id_id2->clk(clk);
       reg_id_id2->reset(reset);
       reg_id_id2->enable(enable_idid2);
-  
+      #endif
 
       
 
       //ligar portos de entrada do registo reg_id_id2 
 
       buildID2();
-
+      
 
       //reg_id_exe
       reg_id_exe = new reg_id_exe_t("reg_id_exe");
@@ -246,7 +255,7 @@ void mips::buildArchitecture(void){
       reg_id_exe->regb_exe(regb_exe);
       reg_id_exe->imm_id(imm_ext);
       reg_id_exe->imm_exe(imm_exe);
-      reg_id_exe->PC4_id(PC4_id);
+      reg_id_exe->PC4_id(PC4_id2);
       reg_id_exe->PC4_exe(PC4_exe);
       reg_id_exe->WriteReg_id(WriteReg);
       reg_id_exe->WriteReg_exe(WriteReg_exe);
@@ -264,9 +273,9 @@ void mips::buildArchitecture(void){
       reg_id_exe->ALUSrc_exe(ALUSrc_exe);
       reg_id_exe->ALUOp_id(ALUOp);
       reg_id_exe->ALUOp_exe(ALUOp_exe);
-      reg_id_exe->PC_id(PC_id);
+      reg_id_exe->PC_id(PC_id2);
       reg_id_exe->PC_exe(PC_exe);
-      reg_id_exe->valid_id(valid_id);
+      reg_id_exe->valid_id(valid_id2);
       reg_id_exe->valid_exe(valid_exe);
       reg_id_exe->clk(clk);
       reg_id_exe->reset(reset_idexe);
@@ -344,7 +353,8 @@ void mips::buildArchitecture(void){
       hazard_unit->enable_pc(enable_pc);
       hazard_unit->enable_ifid(enable_ifid);
       hazard_unit->reset_idexe(reset_haz_idexe);
-   }
+   
+   } 
 
 mips::~mips(void)
 {

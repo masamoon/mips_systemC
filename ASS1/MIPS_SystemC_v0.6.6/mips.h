@@ -108,7 +108,7 @@ SC_MODULE(mips) {
       
    // instruction fields
    sc_signal < sc_uint<5> > rs, rt, rd;
-   sc_signal < sc_uint<16> > imm;
+  // sc_signal < sc_uint<16> > imm_id;
    sc_signal < sc_uint<6> > opcode;
    sc_signal < sc_uint<5> > shamt;
    sc_signal < sc_uint<6> > funct;
@@ -137,13 +137,14 @@ SC_MODULE(mips) {
    // they are used only for visualization purposes
    sc_signal < sc_uint<32> > PC_id;      // PC of instruction in ID
    sc_signal < bool >        valid_id;   // true if there is an instruction in ID
-
+   sc_signal < bool >        valid_id2; 
 
 
    //ID2
    sc_signal <bool> enable_idid2;
   // sc_in  < sc_uint<32> > imm_id, PC4_id, PC_id;
-   sc_out < sc_uint<32> > imm_id2, PC4_id2, PC_id2; 
+   sc_out < sc_uint<32> > PC4_id2, PC_id2; 
+   sc_out < sc_uint<16> > imm_id2;
 
    sc_in < sc_uint<6> > opcode_id;
    sc_out < sc_uint<6> > opcode_id2;
