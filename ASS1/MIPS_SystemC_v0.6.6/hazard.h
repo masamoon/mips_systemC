@@ -28,20 +28,21 @@
 SC_MODULE( hazard )
 {
   public: 
-    sc_in< sc_uint<5> >  rs;
-    sc_in< sc_uint<5> >  rt;        
+    sc_in< sc_uint<5> >  rs, rs_id2;
+    sc_in< sc_uint<5> >  rt, rt_id2;        
     sc_in< sc_uint<5> >  WriteReg_exe, WriteReg_mem;        
     sc_in< bool >  RegWrite_exe, RegWrite_mem;       
      
     // add sc_in enable_idid2
-    sc_out< bool >  enable_pc, enable_ifid, reset_idexe;        
+    sc_out< bool >  enable_pc, enable_ifid, reset_idexe, reset_ifid, enable_id2, reset_id2, enable_regfile, reset_regfile, enable_indexe, enable_exmem, reset_exmem;        
 
     SC_CTOR(hazard)
     {      
         SC_METHOD(detect_hazard);
         sensitive << rs << rt 
 		  << WriteReg_exe << RegWrite_exe
-		  << WriteReg_mem << RegWrite_mem;
+		  << WriteReg_mem << RegWrite_mem
+          << rs_id2 << rt_id2;
    }
   
     void detect_hazard();
