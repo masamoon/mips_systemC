@@ -30,11 +30,10 @@ SC_MODULE( hazard )
   public: 
     sc_in< sc_uint<5> >  rs, rs_id2;
     sc_in< sc_uint<5> >  rt, rt_id2;        
-    sc_in< sc_uint<5> >  WriteReg_exe, WriteReg_mem;        
+    sc_in< sc_uint<5> >  WriteReg_exe, WriteReg_mem, MemRead, BranchTaken;        
     sc_in< bool >  RegWrite_exe, RegWrite_mem;       
-     
-    // add sc_in enable_idid2
-    sc_out< bool >  enable_pc, enable_ifid, reset_idexe, reset_ifid, enable_id2, reset_id2, enable_regfile, reset_regfile, enable_indexe, enable_exmem, reset_exmem;        
+    sc_out< bool >  enable_exmem, reset_idid2, enable_regfile, reset_regfile, reset_exmem;
+    sc_out< bool >  enable_pc, enable_ifid, enable_idexe, reset_idexe, reset_ifid, enable_idid2;        
 
     SC_CTOR(hazard)
     {      

@@ -28,7 +28,7 @@ void hazard::detect_hazard()
                 
                                 
                 printf("hazard\n");
-	else {
+	} else {
 	    
 	    enable_pc.write(true);
 		enable_ifid.write(true);
@@ -50,7 +50,7 @@ void hazard::detect_hazard()
         enable_exmem.write(true);
         reset_exmem.write(false);
 
-        print("no hazard\n");
+        printf("no hazard\n");
 	}
 	if( BranchTaken.read() ) {
                 enable_pc.write(true);
