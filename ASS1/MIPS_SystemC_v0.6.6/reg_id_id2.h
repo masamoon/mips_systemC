@@ -27,6 +27,12 @@ SC_MODULE(reg_id_id2_t) {
 	sc_out < sc_uint<32> > PC4_id2, PC_id2; 
 	sc_in  < sc_uint<16> > imm_id;
 	sc_out < sc_uint<16> > imm_id2;
+	sc_in < sc_uint<5> > rs; 
+	sc_in < sc_uint<5> > rt; 
+
+	sc_out < sc_uint<5> > rs_id2; 
+	sc_out < sc_uint<5> > rt_id2; 
+
 
 	sc_in < bool > valid_id;
 	sc_out < bool > valid_id2; 
@@ -62,11 +68,11 @@ SC_MODULE(reg_id_id2_t) {
 		branch ->enable(enable);
 		branch ->reset(reset);
 
-		
 
 
+     
 		opcode = new regT< sc_uint<6> > ("opcode");
-		opcode->din(opcode_id);
+	    opcode->din(opcode_id);
 		opcode->dout(opcode_id2);
 		opcode->clk(clk);
 		opcode->enable(enable);
@@ -79,9 +85,9 @@ SC_MODULE(reg_id_id2_t) {
 		PC4->clk(clk);
 		PC4->enable(enable);
 		PC4->reset(reset);
-
+     
 		imm = new regT < sc_uint<16> >("imm");
-		imm->din(imm_id);
+	    imm->din(imm_id);
 		imm->dout(imm_id2);
 		imm->clk(clk);
 		imm->enable(enable);

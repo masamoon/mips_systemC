@@ -29,12 +29,14 @@ SC_MODULE(jumpcontrol) {
   
   sc_in< sc_uint<6> >  opcode;
   sc_in< sc_uint<6> >  funct;
-  sc_in< bool >  Branch;
+  
   sc_in< bool > le;
   sc_in< bool > gr;
   sc_in< bool > equal;         
         
   sc_out< sc_uint< 2 > > sel_mux41;
+  
+  sc_out< bool >  Branch;
   sc_out< bool > BranchTaken;  
 
     sc_out< bool >  RegDst;        
@@ -49,7 +51,7 @@ SC_MODULE(jumpcontrol) {
   SC_CTOR(jumpcontrol)
      {      
       SC_METHOD(entry);
-      sensitive << opcode << funct << Branch << le << gr;
+      sensitive << opcode << funct << Branch << le << gr << equal;
     }
   
   void entry();

@@ -130,7 +130,15 @@ void mips::buildID(void)
       jctrl -> gr(gr);
       jctrl -> equal(equal);         
       jctrl -> sel_mux41(sel_mux41);
-      jctrl -> BranchTaken( BranchTaken);       
+      jctrl -> BranchTaken( BranchTaken); 
+      jctrl ->  RegDst(RegDst);        
+  //sc_out< bool >  Branch;        
+      jctrl ->  MemRead(MemRead);        
+      jctrl ->  MemtoReg(MemtoReg);        
+      jctrl ->  ALUOp(ALUOp);        
+      jctrl ->  MemWrite(MemWrite);        
+      jctrl ->  ALUSrc(ALUSrc);  
+      jctrl ->RegWrite(RegWrite);     
       
 }
 
@@ -273,10 +281,14 @@ void mips::buildArchitecture(void){
       reg_id_id2->funct_id2(funct_id2);
       reg_id_id2->PC_id(PC_id);
       reg_id_id2->PC_id2(PC_id2);
+      reg_id_id2->rs(rs);
+      reg_id_id2->rt(rt);
+      reg_id_id2->rs_id2(rs_id2);
+      reg_id_id2->rt_id2(rt_id2);
       reg_id_id2->valid_id(valid_id);
       reg_id_id2->valid_id2(valid_id2);
       reg_id_id2->clk(clk);
-      reg_id_id2->reset(reset);
+      reg_id_id2->reset(reset_idid2);
       reg_id_id2->enable(enable_idid2);
       #endif
 
@@ -393,9 +405,18 @@ void mips::buildArchitecture(void){
       hazard_unit->enable_pc(enable_pc);
       hazard_unit->enable_ifid(enable_ifid);
       hazard_unit->reset_idexe(reset_haz_idexe);
+      hazard_unit->enable_idexe(enable_idexe);
+      hazard_unit->enable_exmem(enable_exmem);
+     
+      hazard_unit->MemRead(MemRead); 
+      hazard_unit->enable_regfile(enable_regfile); 
+      hazard_unit->reset_regfile(reset_regfile ); 
+      hazard_unit->BranchTaken(BranchTaken); 
+     // hazard_unit->reset_exmem(reset_exmem); 
       hazard_unit->rt_id2(rt_id2); 
       hazard_unit->rs_id2(rs_id2);
       hazard_unit->enable_idid2(enable_idid2);
+      hazard_unit->reset_ifid(reset_ifid);
       hazard_unit->reset_idid2(reset_idid2);
 
    } 

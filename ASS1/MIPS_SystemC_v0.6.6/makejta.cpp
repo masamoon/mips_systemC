@@ -5,7 +5,9 @@
  */
 void makejta::calc()
 {
-  
-  jumpaddress.write(PC4.range(31,27)+jta.read()<<2);
+  sc_uint<32> programcounter;
+  programcounter = pc4.read(); 
+
+  jumpaddress.write(programcounter.range(31,27)+jta.read()<<2);
 
 }

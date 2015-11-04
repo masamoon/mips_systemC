@@ -164,10 +164,18 @@ SC_MODULE(mips) {
    sc_signal < bool >        valid_id;   // true if there is an instruction in ID
    sc_signal < bool >        valid_id2; 
 
+   sc_signal < bool > reset_ifid; 
+
+   sc_signal <bool> reset_regfile;
+   sc_signal <bool> enable_regfile; 
+   sc_signal <bool> enable_exmem; 
+
 
    //ID2
    sc_signal <bool> reset_idid2; 
    sc_signal <bool> enable_idid2;
+   sc_signal < sc_uint<5> > rs_id2; 
+   sc_signal < sc_uint<5> > rt_id2; 
   // sc_in  < sc_uint<32> > imm_id, PC4_id, PC_id;
    sc_signal < sc_uint<32> > PC4_id2, PC_id2; 
    sc_signal < sc_uint<16> > imm_id2;
@@ -198,6 +206,7 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<3> > ALUOp_exe;
    sc_signal <bool> Branch_exe;
    
+   sc_signal <bool> enable_idexe; 
    // the following two signals are not used by the architecture
    // they are used only for visualization purposes
    sc_signal < sc_uint<32> > PC_exe;     // PC of instruction in ID
@@ -211,6 +220,7 @@ SC_MODULE(mips) {
    sc_signal <bool> RegWrite_mem;
    sc_signal <bool> Branch_mem, Zero_mem;
 
+   sc_signal <bool> reset_exmem; 
    // the following two signals are not used by the architecture
    // they are used only for visualization purposes
    sc_signal < sc_uint<32> > PC_mem;   

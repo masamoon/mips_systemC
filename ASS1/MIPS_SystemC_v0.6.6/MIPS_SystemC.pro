@@ -9,6 +9,8 @@ HEADERS		= mips.h\
 		  hazard.h\
 		  mipsaux.h\
 		  mux41.h\
+		  makejta.h\
+		  jumpcontrol.h\
 		  comparator.h\
 		  GUI/MIPSctrl.h\
 		  GUI/MIPSarch.h GUI/MIPSmods.h GUI/modview.h\
@@ -20,6 +22,8 @@ HEADERS		= mips.h\
 SOURCES		= main.cpp mips.cpp\
                   imem.cpp decode.cpp regfile.cpp alu.cpp dmem.cpp control.cpp\
 		  mem32.cpp reg.cpp add.cpp gates.cpp ext.cpp shiftl2.cpp comparator.cpp\
+		  jumpcontrol.cpp\
+		  makejta.cpp\
 		  hazard.cpp\
 		  mipsaux.cpp\
 		  GUI/MIPSctrl.cpp\ 
