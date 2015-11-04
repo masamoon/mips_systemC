@@ -78,12 +78,12 @@ void mips::buildID(void)
 
       // comparator
 
-      comp = new comparator("comparator");
-      comp -> op1(comp_op1);
-      comp -> op2(comp_op2);
-      comp -> eq(eq);
-      comp -> le(le);
-      comp -> gr(gr);
+      comp = new comparator ("comparator");
+      comp->op1( regdata1 );
+      comp->op2( regdata2 );
+      comp->eq( equal );
+      comp->le( le );
+      comp->gr( gr );
 
      
 

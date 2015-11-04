@@ -59,7 +59,7 @@ SC_MODULE(mips) {
    // IF 
    registo           *PCreg;     // PC register
    imem              *instmem;   // instruction memory
-   add *add4;                    // adds 4 to PC
+   add               *add4;       // adds 4 to PC
  //  mux< sc_uint<32> > *mPC;      // selects Next PC from PCbrach and PC + 4
 
    //ID
@@ -145,9 +145,9 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<32> > comp_op1;
    sc_signal < sc_uint<32> > comp_op2; 
   // sc_signal < bool > comp_out;
-   sc_signal < bool > gre;
+   sc_signal < bool > gr;
    sc_signal < bool > le; 
-   sc_signal < bool > eq;    
+   sc_signal < bool > equal;    
 
    
 
@@ -166,6 +166,7 @@ SC_MODULE(mips) {
 
 
    //ID2
+   sc_signal <bool> reset_idid2; 
    sc_signal <bool> enable_idid2;
   // sc_in  < sc_uint<32> > imm_id, PC4_id, PC_id;
    sc_signal < sc_uint<32> > PC4_id2, PC_id2; 
