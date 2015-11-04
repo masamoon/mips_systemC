@@ -33,12 +33,24 @@ void mips::buildIF(void)
       add4->res(PC4);
 
       // Selects Next Program Counter Value
-      mPC = new mux< sc_uint<32> > ("mPC");
+      /*mPC = new mux< sc_uint<32> > ("mPC");
    
       mPC->sel(BranchTaken);
       mPC->din0(PC4);
       mPC->din1(BranchTarget_mem);
+      mPC->dout(NPC);*/
+
+      mPC = new mux41< sc_uint<32> > ("mux41");
+      mPC->sel(sel_mux41);
+      mPC->din0(PC4);
+      mPC->din1(BranchTarget_mem);
+      mPC->din2(regdata1);
+      mPC->din3(jumpaddress);
       mPC->dout(NPC);
+
+
+     
+    
 }
 
 /**
@@ -56,6 +68,24 @@ void mips::buildID(void)
       dec1->opcode(opcode);
       dec1->shamt(shamt);
       dec1->funct(funct);
+      dec1->jta(jta);
+
+       //makes jump target address out of the 26 bit jump instruction parameter 
+      mkjta = new makejta ("makejta");
+      mkjta->jta(jta);
+      mkjta->pc4(PC4);
+      mkjta->jumpaddress(jumpaddress); 
+
+      // comparator
+
+      comp = new comparator("comparator");
+      comp -> op1(comp_op1);
+      comp -> op2(comp_op2);
+      comp -> eq(eq);
+      comp -> le(le);
+      comp -> gr(gr);
+
+     
 
      
    
@@ -89,6 +119,18 @@ void mips::buildID(void)
       ctrl->ALUOp(ALUOp);
       ctrl->ALUSrc(ALUSrc);
       ctrl->RegWrite(RegWrite);
+
+      //Jump Control Unit 
+      jctrl = new jumpcontrol("jumpcontrol");
+
+      jctrl -> opcode(opcode);
+      jctrl -> funct( funct);
+      jctrl -> Branch(Branch);
+      jctrl -> le(le);
+      jctrl -> gr(gr);
+      jctrl -> equal(equal);         
+      jctrl -> sel_mux41(sel_mux41);
+      jctrl -> BranchTaken( BranchTaken);       
       
 }
 
@@ -98,10 +140,7 @@ void mips::buildID2(void)
        // Selects Register to Write
       mr = new mux< sc_uint<5> > ("muxRDst");
 
-      //TODO: instiatiate subtractor
-
-
-      //
+      
       mr->sel(RegDst);
       mr->din0(rt);
       mr->din1(rd);
@@ -113,6 +152,12 @@ void mips::buildID2(void)
       e1->din(imm_id2);
       e1->dout(imm_ext);
      
+     // Enables Branch
+      a1 = new andgate ("a1");
+
+      a1->din1(branch_id2);
+      a1->din2(equal);
+      a1->dout(BranchTaken);
 }
 
 /**
@@ -166,12 +211,7 @@ void mips::buildMEM(void)
       datamem->rd(MemRead_mem);
       datamem->clk(clk);
 
-      // Enables Branch
-      a1 = new andgate ("a1");
-
-      a1->din1(Branch_mem);
-      a1->din2(Zero_mem);
-      a1->dout(BranchTaken);
+      
 }
 
 /**
@@ -217,7 +257,7 @@ void mips::buildArchitecture(void){
 
       buildID();
 
-      // cheira-me que faltam aqui cenas
+      
 
       reg_id_id2 = new reg_id_id2_t("reg_id_id2");
        #if 1  
@@ -225,8 +265,8 @@ void mips::buildArchitecture(void){
       reg_id_id2->PC4_id(PC4_id);
       reg_id_id2->imm_id2(imm_id2);
       reg_id_id2->PC4_id2(PC4_id2);
-
-      
+      reg_id_id2->branch_id(Branch);
+      reg_id_id2->branch_id2(branch_id2); 
       reg_id_id2->opcode_id(opcode_id);
       reg_id_id2->opcode_id2(opcode_id2);
       reg_id_id2->funct_id(funct_id);

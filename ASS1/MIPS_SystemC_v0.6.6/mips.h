@@ -16,9 +16,13 @@
 #include "alu.h"
 #include "dmem.h"
 #include "control.h"
+#include "jumpcontrol.h"
 #include "hazard.h"
+#include "comparator.h"
+#include "makejta.h"
 
 #include "mux.h"
+#include "mux41.h"
 #include "reg.h"
 #include "ext.h"
 #include "shiftl2.h"
@@ -56,9 +60,10 @@ SC_MODULE(mips) {
    registo           *PCreg;     // PC register
    imem              *instmem;   // instruction memory
    add *add4;                    // adds 4 to PC
-   mux< sc_uint<32> > *mPC;      // selects Next PC from PCbrach and PC + 4
+ //  mux< sc_uint<32> > *mPC;      // selects Next PC from PCbrach and PC + 4
 
    //ID
+   comparator        *comp;      // comparator used to solve branches 
    decode            *dec1;      // decodes instruction
    regfile           *rfile;     // register file
    control           *ctrl;      // control
@@ -66,6 +71,11 @@ SC_MODULE(mips) {
    ext *e1;                      // sign extends imm to 32 bits
    orgate *or_reset_idexe;
    hazard *hazard_unit;
+
+   mux41 < sc_uint<32> > *mPC;   //chooses PC source (JTA,register,PC4,BTA)
+   makejta *mkjta;               //makes jump addresss out of 26 bit parameter 
+
+   jumpcontrol *jctrl;        //jump control unit 
 
    //ID2 
 
@@ -97,9 +107,12 @@ SC_MODULE(mips) {
                              NPC,      // Next Program Counter
 			     PC4;      // PC + 4
    sc_signal < sc_uint<32> > inst;     // current instruction
+
    sc_signal <bool> enable_pc;
 
    sc_signal <bool> enable_ifid;
+
+   sc_signal < sc_uint<2> > sel_mux41; 
 
    //ID
    sc_signal < sc_uint<16> > imm_id;
@@ -112,6 +125,8 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<6> > opcode;
    sc_signal < sc_uint<5> > shamt;
    sc_signal < sc_uint<6> > funct;
+   sc_signal < sc_uint<26> > jta; 
+   sc_signal < sc_uint<32> > jumpaddress; 
    // register file signals
    sc_signal < sc_uint<5> > WriteReg;  // register to write
 
@@ -126,6 +141,16 @@ SC_MODULE(mips) {
                              regb_mem; // value of regiter rt MEM phase
 
    sc_signal <bool> reset_haz_idexe, reset_idexe;
+   //comparator
+   sc_signal < sc_uint<32> > comp_op1;
+   sc_signal < sc_uint<32> > comp_op2; 
+  // sc_signal < bool > comp_out;
+   sc_signal < bool > gre;
+   sc_signal < bool > le; 
+   sc_signal < bool > eq;    
+
+   
+
    // control signals
    sc_signal <bool> MemRead, MemWrite, MemtoReg;
    sc_signal <bool> RegWrite, RegDst;
@@ -151,6 +176,9 @@ SC_MODULE(mips) {
 
    sc_signal < sc_uint<6> >  funct_id;
    sc_signal < sc_uint<6> > funct_id2; 
+
+   sc_signal <bool> branch_id; 
+   sc_signal <bool> branch_id2; 
 
 
 

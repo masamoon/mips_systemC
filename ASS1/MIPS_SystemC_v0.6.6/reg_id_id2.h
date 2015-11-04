@@ -37,6 +37,9 @@ SC_MODULE(reg_id_id2_t) {
 	sc_in < sc_uint<6> >  funct_id;
 	sc_out < sc_uint<6> > funct_id2; 
 
+	sc_in < bool > branch_id; 
+	sc_out < bool > branch_id2; 
+
 	regT < sc_uint<32> > *PC4;
 	regT < sc_uint<16> > *imm;
 	
@@ -44,10 +47,22 @@ SC_MODULE(reg_id_id2_t) {
 	regT < sc_uint<6> > *opcode;
 	//regT < sc_uint<3> > *ALUOp;
 
+	regT < bool > *branch; 
+
 	regT < sc_uint<32> > *PC;      // only for visualization purposes
 	regT < bool > *valid;          // only for visualization purposes
 
 	SC_CTOR(reg_id_id2_t) {
+
+
+		branch = new regT< bool > ("branch");
+		branch ->din(branch_id);
+		branch ->dout(branch_id2);
+		branch ->clk(clk);
+		branch ->enable(enable);
+		branch ->reset(reset);
+
+		
 
 
 		opcode = new regT< sc_uint<6> > ("opcode");

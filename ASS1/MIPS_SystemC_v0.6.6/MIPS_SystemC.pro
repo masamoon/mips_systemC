@@ -8,6 +8,8 @@ HEADERS		= mips.h\
 		  regT.h reg_if_id.h reg_id_id2.h reg_id_exe.h reg_exe_mem.h reg_mem_wb.h\
 		  hazard.h\
 		  mipsaux.h\
+		  mux41.h\
+		  comparator.h\
 		  GUI/MIPSctrl.h\
 		  GUI/MIPSarch.h GUI/MIPSmods.h GUI/modview.h\
 		  GUI/MIPSimemview.h GUI/MIPSregfileview.h GUI/MIPSdmemview.h GUI/MIPSmemview.h\
@@ -17,7 +19,7 @@ HEADERS		= mips.h\
 		  GUI/readimem.xpm GUI/readdmem.xpm
 SOURCES		= main.cpp mips.cpp\
                   imem.cpp decode.cpp regfile.cpp alu.cpp dmem.cpp control.cpp\
-		  mem32.cpp reg.cpp add.cpp gates.cpp ext.cpp shiftl2.cpp\
+		  mem32.cpp reg.cpp add.cpp gates.cpp ext.cpp shiftl2.cpp comparator.cpp\
 		  hazard.cpp\
 		  mipsaux.cpp\
 		  GUI/MIPSctrl.cpp\ 
