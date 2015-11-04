@@ -41,7 +41,7 @@ SC_MODULE( hazard )
         sensitive << rs << rt 
 		  << WriteReg_exe << RegWrite_exe
 		  << WriteReg_mem << RegWrite_mem
-          << rs_id2 << rt_id2;
+      << rs_id2 << rt_id2;
    }
   
     void detect_hazard();

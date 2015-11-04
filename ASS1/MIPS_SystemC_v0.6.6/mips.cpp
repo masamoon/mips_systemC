@@ -393,7 +393,7 @@ void mips::buildArchitecture(void){
       hazard_unit->enable_pc(enable_pc);
       hazard_unit->enable_ifid(enable_ifid);
       hazard_unit->reset_idexe(reset_haz_idexe);
-      hazard_unit->rt_id2(rt_id2); //estes sinais nao estao declarados no scope
+      hazard_unit->rt_id2(rt_id2); 
       hazard_unit->rs_id2(rs_id2);
       hazard_unit->enable_idid2(enable_idid2);
       hazard_unit->reset_idid2(reset_idid2);

@@ -7,14 +7,17 @@ void hazard::detect_hazard()
 	
 	if(    rs.read()!=0 && rs.read()==WriteReg_exe.read() && RegWrite_exe.read()==true
 	    || rs.read()!=0 && rs.read()==WriteReg_mem.read() && RegWrite_mem.read()==true
+            || rs.read()!=0 && rs.read()==WriteReg_wb.read() && RegWrite_wb.read()==true
 	    || rs_id2.read()!=0 && rs_id2.read()==WriteReg_exe.read() && RegWrite_exe.read()==true
 	    || rs_id2.read()!=0 && rs_id2.read()==WriteReg_mem.read() && RegWrite_mem.read()==true
-	    
+	    || rs_id2.read()!=0 && rs_id2.read()==WriteReg_wb.read() && RegWrite_wb.read()==true
 
 	    || rt.read()!=0 && rt.read()==WriteReg_exe.read() && RegWrite_exe.read()==true && MemRead.read() == false
 	    || rt.read()!=0 && rt.read()==WriteReg_mem.read() && RegWrite_mem.read()==true && MemRead.read() == false
-        || rt_id2.read()!=0 && rt_id2.read()==WriteReg_exe.read() && RegWrite_exe.read()==true && MemRead.read() == false
-	    || rt_id2.read()!=0 && rt_id2.read()==WriteReg_mem.read() && RegWrite_mem.read()==true && MemRead.read() == false) {
+            || rt.read()!=0 && rt.read()==WriteReg_wb.read() && RegWrite_wb.read()==true && MemRead.read() == false
+            || rt_id2.read()!=0 && rt_id2.read()==WriteReg_exe.read() && RegWrite_exe.read()==true && MemRead.read() == false
+	    || rt_id2.read()!=0 && rt_id2.read()==WriteReg_mem.read() && RegWrite_mem.read()==true && MemRead.read() == false) 
+            || rt_id2.read()!=0 && rt_id2.read()==WriteReg_wb.read() && RegWrite_wb.read()==true && MemRead.read() == false) {
 
 		enable_pc.write(false);
             
@@ -35,20 +38,20 @@ void hazard::detect_hazard()
 		reset_idexe.write(false);
 		enable_pc.write(true);
             
-        enable_ifid.write(true);
-        reset_ifid.write(false);
-                
-        enable_idid2.write(true);
-        reset_idid2.write(false);
-                
-        enable_regfile.write(true);
-        reset_regfile.write(false);
-                
-        enable_idexe.write(true);
-        reset_idexe.write(false);
-                
-        enable_exmem.write(true);
-        reset_exmem.write(false);
+                enable_ifid.write(true);
+                reset_ifid.write(false);
+                        
+                enable_idid2.write(true);
+                reset_idid2.write(false);
+                        
+                enable_regfile.write(true);
+                reset_regfile.write(false);
+                        
+                enable_idexe.write(true);
+                reset_idexe.write(false);
+                        
+                enable_exmem.write(true);
+                reset_exmem.write(false);
 
         printf("no hazard\n");
 	}
