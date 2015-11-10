@@ -6,6 +6,9 @@
  */
 void control::entry()
 {
+	Branch.write(0);
+	
+
   switch(opcode.read()) {
     case 0: // R-format
             RegDst.write(1);  
@@ -26,6 +29,10 @@ void control::entry()
 	                break;
 	       case 42: ALUOp.write(7);
 	                break;
+	       case 8:  Branch.write(6);
+	       //sel_mux41.write(2); //jr 
+
+	       			
 		}
 	    break;
     case  4: // beq
@@ -36,6 +43,43 @@ void control::entry()
 	    Branch.write(1);
 	    ALUOp.write(6);
 	    break;
+	    case 5: //bne
+	ALUSrc.write(0);
+	    RegWrite.write(0);
+	    MemRead.write(0);
+	    MemWrite.write(0);
+	    Branch.write(2);
+	    ALUOp.write(6);
+	     //sel_mux41.write(1);
+		break; 
+	case 6: // blez
+	ALUSrc.write(0);
+	    RegWrite.write(0);
+	    MemRead.write(0);
+	    MemWrite.write(0);
+	    Branch.write(3);
+	    ALUOp.write(6);
+	//     sel_mux41.write(1);
+		break; //
+	case 7: //bgtz
+	ALUSrc.write(0);
+	    RegWrite.write(0);
+	    MemRead.write(0);
+	    MemWrite.write(0);
+	    Branch.write(4);
+	    
+	    ALUOp.write(6);
+	    // sel_mux41.write(1);
+		break; 
+	case 2: //jump 
+		ALUSrc.write(0);
+		RegWrite.write(0);
+	    MemRead.write(0);
+	    MemWrite.write(0);
+	    Branch.write(5);
+	    ALUOp.write(6);
+		//sel_mux41.write(3);
+		break; 
     case 35: // lw
             RegDst.write(0); 
             ALUSrc.write(1);

@@ -156,6 +156,7 @@ SC_MODULE(mips) {
    sc_signal <bool> RegWrite, RegDst;
    sc_signal <bool> ALUSrc;
    sc_signal < sc_uint<3> > ALUOp;
+   sc_signal < sc_uint<3> > BranchOp; 
    sc_signal <bool> Branch;
 
    // the following two signals are not used by the architecture
@@ -231,6 +232,8 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<5> > WriteReg_wb;   
    sc_signal <bool> MemtoReg_wb;
    sc_signal <bool> RegWrite_wb;
+
+   sc_signal <bool> reset_memwb; 
 
    // the following two signals are not used by the architecture
    // they are used only for visualization purposes

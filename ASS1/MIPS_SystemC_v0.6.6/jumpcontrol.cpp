@@ -6,15 +6,65 @@
  */
 void jumpcontrol::entry()
 {
+
+	Branch.write(0);
+	sel_mux41.write(0); 
+
+	switch(BranchOp.read()){
+
+			
+		
+		case 0: //no branch
+			sel_mux41.write(0); 
+			Branch.write(0);
+			break; 
+		case 1: //beq
+			if(eq.read()){
+				Branch.write(1);
+				sel_mux41.write(1);
+			}
+			break; 
+		case 2: //bne
+			if(eq.read()){
+				Branch.write(0);
+				sel_mux41.write(1);
+			}
+			else{
+				Branch.write(1);
+			}
+			break;
+		case 3: //blez 
+			if(le.read()){
+				Branch.write(1);
+				sel_mux41.write(1);
+			}
+			break; 
+		case 4: //bgtz
+			if(gr.read()){
+				Branch.write(1);
+				sel_mux41.write(1);
+			}
+			break; 
+		case 5: //jump
+			sel_mux41.write(3);
+			break; 
+		case 6: //jump register
+			sel_mux41.write(2);
+			break;  
+	}
+}
+
+	/*
   switch(opcode.read()) {
     case 0: // R-format
-            RegDst.write(1);  
-            ALUSrc.write(0);
+        RegDst.write(1);  
+        ALUSrc.write(0);
 	    MemtoReg.write(0);
 	    RegWrite.write(1);
 	    MemRead.write(0);
 	    MemWrite.write(0);
 	    Branch.write(0);
+	    sel_mux41.write(0);
 	    switch(funct.read()) {
 	       case 32: ALUOp.write(2);
 	                break;
@@ -27,7 +77,7 @@ void jumpcontrol::entry()
 	       case 42: ALUOp.write(7);
 	                break;
 	       case 8:  sel_mux41.write(2); //jr 
-	       			
+
 	       			break;
 	      		}
 	    break;
@@ -36,8 +86,12 @@ void jumpcontrol::entry()
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
+	    if(equal.read())
+	    	Branch.write(1);
+	    else
+	    	Branch.write(0);
 	    ALUOp.write(6);
+	    sel_mux41.write(1);
 	    break;
     case 35: // lw
             RegDst.write(0); 
@@ -48,6 +102,7 @@ void jumpcontrol::entry()
 	    MemWrite.write(0);
 	    Branch.write(0);
 	    ALUOp.write(2);
+	     sel_mux41.write(0);
 	    break;
     case 43: // sw
             ALUSrc.write(1);
@@ -56,30 +111,43 @@ void jumpcontrol::entry()
 	    MemWrite.write(1);
 	    Branch.write(0);
 	    ALUOp.write(2);
+	     sel_mux41.write(0);
 	    break;
 	case 5: //bne
 	ALUSrc.write(0);
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
+	    if(!equal.read())
+	    	Branch.write(1);
+	    else
+	    	Branch.write(0);
 	    ALUOp.write(6);
+	     sel_mux41.write(1);
 		break; 
 	case 6: // blez
 	ALUSrc.write(0);
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
+	    if(le.read())
+	    	Branch.write(1);
+	    else
+	    	Branch.write(0);
 	    ALUOp.write(6);
+	     sel_mux41.write(1);
 		break; //
 	case 7: //bgtz
 	ALUSrc.write(0);
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
+	    if(gr.read())
+	    	Branch.write(1);
+	    else
+	    	Branch.write(0);
 	    ALUOp.write(6);
+	     sel_mux41.write(1);
 		break; 
 	case 2: //jump 
 		ALUSrc.write(0);
@@ -88,12 +156,13 @@ void jumpcontrol::entry()
 	    MemWrite.write(0);
 	    Branch.write(1);
 	    ALUOp.write(6);
-		sel_mux41.write(1);
+		sel_mux41.write(3);
 		break; 
    default: // Unknown opcode
             fprintf(stderr,"ERROR: Illegal opcode\n");
 	    //assert(0);
 	    break;
     }
-}
+    */
+
 

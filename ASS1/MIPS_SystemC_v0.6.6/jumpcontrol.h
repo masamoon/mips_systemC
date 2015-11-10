@@ -27,31 +27,32 @@
 
 SC_MODULE(jumpcontrol) {
   
-  sc_in< sc_uint<6> >  opcode;
-  sc_in< sc_uint<6> >  funct;
-  
+  //sc_in< sc_uint<6> >  opcode;
+  //sc_in< sc_uint<6> >  funct;
+
+  sc_in< sc_uint<3> >  BranchOp; 
   sc_in< bool > le;
   sc_in< bool > gr;
-  sc_in< bool > equal;         
+  sc_in< bool > eq;         
         
   sc_out< sc_uint< 2 > > sel_mux41;
   
   sc_out< bool >  Branch;
-  sc_out< bool > BranchTaken;  
+  //sc_out< bool > BranchTaken;  
 
-    sc_out< bool >  RegDst;        
+  /*  sc_out< bool >  RegDst;        
   //sc_out< bool >  Branch;        
-  sc_out< bool >  MemRead;        
+ // sc_out< bool >  MemRead;        
   sc_out< bool >  MemtoReg;        
   sc_out< sc_uint<3> >  ALUOp;        
   sc_out< bool >  MemWrite;        
   sc_out< bool >  ALUSrc;        
-  sc_out< bool >  RegWrite;        
+ // sc_out< bool >  RegWrite;   */     
 
   SC_CTOR(jumpcontrol)
      {      
       SC_METHOD(entry);
-      sensitive << opcode << funct << Branch << le << gr << equal;
+      sensitive << BranchOp << Branch << le << gr << eq;
     }
   
   void entry();

@@ -97,10 +97,9 @@ void mips::buildID(void)
       rfile->regwrite(WriteReg_wb);
       rfile->data1( regdata1 );
       rfile->data2( regdata2 );
-
       rfile->wr(RegWrite_wb);
       rfile->datawr(WriteVal);
-
+      rfile->enable(enable_regfile);
       rfile->clk(clk);
       rfile->reset(reset);
 
@@ -112,7 +111,7 @@ void mips::buildID(void)
       ctrl->opcode(opcode); 
       ctrl->funct(funct);   
       ctrl->RegDst(RegDst); 
-      ctrl->Branch(Branch);
+      ctrl->Branch(BranchOp);
       ctrl->MemRead(MemRead);
       ctrl->MemWrite(MemWrite);
       ctrl->MemtoReg(MemtoReg);
@@ -120,25 +119,27 @@ void mips::buildID(void)
       ctrl->ALUSrc(ALUSrc);
       ctrl->RegWrite(RegWrite);
 
+
+
       //Jump Control Unit 
       jctrl = new jumpcontrol("jumpcontrol");
 
-      jctrl -> opcode(opcode);
-      jctrl -> funct( funct);
-      jctrl -> Branch(Branch);
+     // jctrl -> opcode(opcode);
+     // jctrl -> funct( funct);
+      jctrl -> BranchOp(BranchOp); 
+      jctrl -> Branch(BranchTaken);
       jctrl -> le(le);
       jctrl -> gr(gr);
-      jctrl -> equal(equal);         
+      jctrl -> eq(equal);         
       jctrl -> sel_mux41(sel_mux41);
-      jctrl -> BranchTaken( BranchTaken); 
-      jctrl ->  RegDst(RegDst);        
-  //sc_out< bool >  Branch;        
+     // jctrl -> BranchTaken(BranchTaken); 
+      /*jctrl ->  RegDst(RegDst);        
       jctrl ->  MemRead(MemRead);        
       jctrl ->  MemtoReg(MemtoReg);        
       jctrl ->  ALUOp(ALUOp);        
       jctrl ->  MemWrite(MemWrite);        
       jctrl ->  ALUSrc(ALUSrc);  
-      jctrl ->RegWrite(RegWrite);     
+      jctrl ->RegWrite(RegWrite);     */
       
 }
 
@@ -161,11 +162,13 @@ void mips::buildID2(void)
       e1->dout(imm_ext);
      
      // Enables Branch
-      a1 = new andgate ("a1");
+   /*   a1 = new andgate ("a1");
 
       a1->din1(branch_id2);
       a1->din2(equal);
-      a1->dout(BranchTaken);
+      a1->dout(BranchTaken);*/
+
+
 }
 
 /**
@@ -259,7 +262,7 @@ void mips::buildArchitecture(void){
       reg_if_id->valid_if(const1);
       reg_if_id->valid_id(valid_id);
       reg_if_id->clk(clk);
-      reg_if_id->reset(reset);
+      reg_if_id->reset(reset_ifid);
       reg_if_id->enable(enable_ifid);
 
 
@@ -368,7 +371,7 @@ void mips::buildArchitecture(void){
       reg_exe_mem->valid_exe(valid_exe);
       reg_exe_mem->valid_mem(valid_mem);
       reg_exe_mem->clk(clk);
-      reg_exe_mem->reset(reset);
+      reg_exe_mem->reset(reset_exmem);
       reg_exe_mem->enable(const1);
 
       buildMEM();
@@ -390,7 +393,7 @@ void mips::buildArchitecture(void){
       reg_mem_wb->valid_mem(valid_mem);
       reg_mem_wb->valid_wb(valid_wb);
       reg_mem_wb->clk(clk);
-      reg_mem_wb->reset(reset);
+      reg_mem_wb->reset(reset_memwb);
       reg_mem_wb->enable(const1);
 
       buildWB();
@@ -402,17 +405,20 @@ void mips::buildArchitecture(void){
       hazard_unit->RegWrite_exe(RegWrite_exe);
       hazard_unit->WriteReg_mem(WriteReg_mem);
       hazard_unit->RegWrite_mem(RegWrite_mem);
+      hazard_unit->WriteReg_wb(WriteReg_wb);
+      hazard_unit->RegWrite_wb(RegWrite_wb);
       hazard_unit->enable_pc(enable_pc);
       hazard_unit->enable_ifid(enable_ifid);
       hazard_unit->reset_idexe(reset_haz_idexe);
       hazard_unit->enable_idexe(enable_idexe);
       hazard_unit->enable_exmem(enable_exmem);
-     
-      hazard_unit->MemRead(MemRead); 
+      hazard_unit->MemRead_exe(MemRead_exe); 
+      hazard_unit->MemRead_mem(MemRead_mem); 
       hazard_unit->enable_regfile(enable_regfile); 
       hazard_unit->reset_regfile(reset_regfile ); 
+      hazard_unit->reset_exmem(reset_exmem);
+      hazard_unit->reset_memwb(reset_memwb);
       hazard_unit->BranchTaken(BranchTaken); 
-     // hazard_unit->reset_exmem(reset_exmem); 
       hazard_unit->rt_id2(rt_id2); 
       hazard_unit->rs_id2(rs_id2);
       hazard_unit->enable_idid2(enable_idid2);

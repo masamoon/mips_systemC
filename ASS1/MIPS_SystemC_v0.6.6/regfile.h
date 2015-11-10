@@ -30,30 +30,32 @@
 
 class regfile : public sc_module, public mem32
 {
-  public: 
-    sc_in< sc_uint<5> >  reg1;
-    sc_in< sc_uint<5> >  reg2;        
-    sc_in< sc_uint<5> >  regwrite;        
-    sc_in< sc_uint<32> > datawr;        
-    sc_in<bool> wr;        
-    sc_in<bool> clk;
-    sc_in<bool> reset;
+   public: 
+      sc_in< sc_uint<5> >  reg1;
+      sc_in< sc_uint<5> >  reg2;        
+      sc_in< sc_uint<5> >  regwrite;        
+      sc_in< sc_uint<32> > datawr;        
+      sc_in<bool> wr;        
+      sc_in<bool> clk;
+      sc_in<bool> reset;
+      sc_in<bool> enable;
 
-    sc_out< sc_uint<32> > data1;        
-    sc_out< sc_uint<32> > data2;        
+      sc_out< sc_uint<32> > data1;        
+      sc_out< sc_uint<32> > data2;        
 
-    SC_CTOR(regfile)
-	{      
-		SC_METHOD(regfile_access);
-		sensitive_pos << clk;
+      sc_signal< sc_uint<5> >  s_reg1, s_reg2;
 
-		init_regs();
-	}
-  
-    void init_regs();
-    void dump();
+      SC_CTOR(regfile)
+      {      
+         SC_METHOD(regfile_access);
+         sensitive_pos << clk;
+         sensitive << s_reg1 << s_reg2;
 
-    void regfile_access();
+         init_regs();
+      }
+      void init_regs();
+      void dump();
+      void regfile_access();
 };
 
 #endif

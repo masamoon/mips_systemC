@@ -31,7 +31,7 @@ SC_MODULE(control) {
   sc_in< sc_uint<6> >  funct;
 
   sc_out< bool >  RegDst;        
-  sc_out< bool >  Branch;        
+  sc_out< sc_uint<3> >  Branch;        
   sc_out< bool >  MemRead;        
   sc_out< bool >  MemtoReg;        
   sc_out< sc_uint<3> >  ALUOp;        

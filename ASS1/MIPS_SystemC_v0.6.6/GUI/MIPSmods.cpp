@@ -21,10 +21,15 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     : Q3ScrollView( parent, name, fl ), mips1(m)
 {   
     //resize viewport
-    resizeContents(820+5,194+5);
+    /*resizeContents(820+5,194+5);
 
     resize( QSize(820+10,194+10) ); 
-    setMaximumSize( QSize(820+10,194+10) ); 
+    setMaximumSize( QSize(820+10,194+10) ); */
+
+    resizeContents(1500+5,194+5);
+
+    resize( QSize(1500+10,194+10) ); 
+    setMaximumSize( QSize(1500+10,194+10) ); 
 
     setIcon(QPixmap("mips.xpm"));
 
@@ -86,6 +91,42 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     addChild(dmemView,5+MODSTEPX*4,5);
     
     connect(this,SIGNAL(updateModules()), dmemView, SLOT(redrawModule()));
+
+    //mux41
+    ModView *mpcView=new ModView("mpc",viewport());
+    mpcView->addPort(mips1.mPC->sel, "sel");
+    mpcView->addPort(mips1.mPC->din1, "bta");
+    mpcView->addPort(mips1.mPC->din2, "regdata");
+    mpcView->addPort(mips1.mPC->din3, "jaddr");
+    mpcView->addPort(mips1.mPC->dout, "NPC");
+    addChild(mpcView,5+MODSTEPX*5,5);
+    
+    connect(this,SIGNAL(updateModules()), mpcView, SLOT(redrawModule()));
+
+    //jumpcontrol 
+    ModView *jctrlView=new ModView("jumpctrl",viewport());
+    jctrlView->addPort(mips1.jctrl->Branch, "btaken");
+    jctrlView->addPort(mips1.jctrl->gr, "gr");
+    jctrlView->addPort(mips1.jctrl->le, "le");
+    jctrlView->addPort(mips1.jctrl->eq, "equal");
+    addChild(jctrlView,5+MODSTEPX*6,5);
+    
+    connect(this,SIGNAL(updateModules()), mpcView, SLOT(redrawModule()));
+
+
+    //hazard unit 
+    ModView *hazard_unitView=new ModView("hazard_unit",viewport());
+    hazard_unitView->addPort(mips1.hazard_unit->reset_idexe, "reset idex");
+    hazard_unitView->addPort(mips1.hazard_unit->enable_idexe, "enable_idex");
+    hazard_unitView->addPort(mips1.hazard_unit->reset_exmem, "reset_exmem");
+    hazard_unitView->addPort(mips1.hazard_unit->enable_exmem, "enable_exmem");
+    hazard_unitView->addPort(mips1.hazard_unit->enable_ifid, "enable_ifid");
+    hazard_unitView->addPort(mips1.hazard_unit->enable_idid2, "enable_idid2");
+    //hazard_unitView->addPort(mips1.jctrl->equal, "equal");
+    addChild(hazard_unitView,5+MODSTEPX*7,5);
+    
+    connect(this,SIGNAL(updateModules()), mpcView, SLOT(redrawModule()));
+
 
     setFocusPolicy(Qt::StrongFocus);
 }
