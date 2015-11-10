@@ -29,7 +29,8 @@ SC_MODULE( hazard )
 {
   public: 
     sc_in< sc_uint<5> >  rs, rs_id2;
-    sc_in< sc_uint<5> >  rt, rt_id2;        
+    sc_in< sc_uint<5> >  rt, rt_id2; 
+ //   sc_in< sc_uint<5> >  rd, rd_id2;        
     sc_in< sc_uint<5> >  WriteReg_exe, WriteReg_mem,WriteReg_wb; 
     sc_in< bool > MemRead_exe, MemRead_mem;
   //  sc_in< bool > MemRead;
@@ -45,9 +46,10 @@ SC_MODULE( hazard )
 		  << WriteReg_exe << RegWrite_exe
 		  << WriteReg_mem << RegWrite_mem
           << rs_id2 << rt_id2 << WriteReg_wb 
-          << RegWrite_wb
+          << RegWrite_wb 
           << MemRead_exe << MemRead_mem 
           << BranchTaken;
+          // << rd << rd_id2
    }
   
     void detect_hazard();

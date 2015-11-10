@@ -265,6 +265,10 @@ void mips::buildArchitecture(void){
       reg_if_id->reset(reset_ifid);
       reg_if_id->enable(enable_ifid);
 
+      or_reset_ifid = new orgate("or_reset_ifid");                      ////////////////
+      or_reset_ifid->din1(reset);
+      or_reset_ifid->din2(reset_haz_ifid);
+      or_reset_ifid->dout(reset_ifid);
 
       buildID();
 
@@ -286,12 +290,14 @@ void mips::buildArchitecture(void){
       reg_id_id2->PC_id2(PC_id2);
       reg_id_id2->rs(rs);
       reg_id_id2->rt(rt);
+      reg_id_id2->rd(rd);
       reg_id_id2->rs_id2(rs_id2);
       reg_id_id2->rt_id2(rt_id2);
       reg_id_id2->valid_id(valid_id);
       reg_id_id2->valid_id2(valid_id2);
       reg_id_id2->clk(clk);
-      reg_id_id2->reset(reset_idid2);
+      reg_id_id2->reset(reset);
+                                                            // reg_id_id2->reset(reset_idid2);
       reg_id_id2->enable(enable_idid2);
       #endif
 
@@ -336,7 +342,7 @@ void mips::buildArchitecture(void){
       reg_id_exe->reset(reset_idexe);
       reg_id_exe->enable(const1);
 
-      or_reset_idexe = new orgate("or_reset_idexe");
+      or_reset_idexe = new orgate("or_reset_idexe");                    ////////
       or_reset_idexe->din1(reset);
       or_reset_idexe->din2(reset_haz_idexe);
       or_reset_idexe->dout(reset_idexe);
@@ -371,7 +377,7 @@ void mips::buildArchitecture(void){
       reg_exe_mem->valid_exe(valid_exe);
       reg_exe_mem->valid_mem(valid_mem);
       reg_exe_mem->clk(clk);
-      reg_exe_mem->reset(reset_exmem);
+      reg_exe_mem->reset(reset);                       //reg_exe_mem->reset(reset_exmem);
       reg_exe_mem->enable(const1);
 
       buildMEM();
@@ -393,7 +399,8 @@ void mips::buildArchitecture(void){
       reg_mem_wb->valid_mem(valid_mem);
       reg_mem_wb->valid_wb(valid_wb);
       reg_mem_wb->clk(clk);
-      reg_mem_wb->reset(reset_memwb);
+      reg_mem_wb->reset(reset);
+                                                // reg_mem_wb->reset(reset_memwb);
       reg_mem_wb->enable(const1);
 
       buildWB();
@@ -421,6 +428,7 @@ void mips::buildArchitecture(void){
       hazard_unit->BranchTaken(BranchTaken); 
       hazard_unit->rt_id2(rt_id2); 
       hazard_unit->rs_id2(rs_id2);
+    //  hazard_unit->rd_id2(rd_id2);
       hazard_unit->enable_idid2(enable_idid2);
       hazard_unit->reset_ifid(reset_ifid);
       hazard_unit->reset_idid2(reset_idid2);

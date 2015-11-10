@@ -69,7 +69,7 @@ SC_MODULE(mips) {
    control           *ctrl;      // control
    mux< sc_uint<5> >  *mr;       // selects destination register
    ext *e1;                      // sign extends imm to 32 bits
-   orgate *or_reset_idexe;
+   orgate *or_reset_idexe, *or_reset_ifid;  
    hazard *hazard_unit;
 
    mux41 < sc_uint<32> > *mPC;   //chooses PC source (JTA,register,PC4,BTA)
@@ -140,7 +140,7 @@ SC_MODULE(mips) {
                              regb_exe, // value of regiter rt EXE phase
                              regb_mem; // value of regiter rt MEM phase
 
-   sc_signal <bool> reset_haz_idexe, reset_idexe;
+   sc_signal <bool> reset_haz_idexe, reset_idexe, reset_haz_ifid;
    //comparator
    sc_signal < sc_uint<32> > comp_op1;
    sc_signal < sc_uint<32> > comp_op2; 

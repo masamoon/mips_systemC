@@ -29,9 +29,11 @@ SC_MODULE(reg_id_id2_t) {
 	sc_out < sc_uint<16> > imm_id2;
 	sc_in < sc_uint<5> > rs; 
 	sc_in < sc_uint<5> > rt; 
+	sc_in < sc_uint<5> > rd;
 
 	sc_out < sc_uint<5> > rs_id2; 
 	sc_out < sc_uint<5> > rt_id2; 
+	sc_out < sc_uint<5> > rd_id2; 
 
 
 	sc_in < bool > valid_id;
