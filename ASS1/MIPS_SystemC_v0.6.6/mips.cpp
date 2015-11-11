@@ -293,6 +293,7 @@ void mips::buildArchitecture(void){
       reg_id_id2->rd(rd);
       reg_id_id2->rs_id2(rs_id2);
       reg_id_id2->rt_id2(rt_id2);
+      reg_id_id2->rd_id2(rd_id2);
       reg_id_id2->valid_id(valid_id);
       reg_id_id2->valid_id2(valid_id2);
       reg_id_id2->clk(clk);
@@ -408,6 +409,7 @@ void mips::buildArchitecture(void){
       hazard_unit = new hazard("hazard_unit");
       hazard_unit->rs( rs );
       hazard_unit->rt( rt );
+      hazard_unit->rd( rd );
       hazard_unit->WriteReg_exe(WriteReg_exe);
       hazard_unit->RegWrite_exe(RegWrite_exe);
       hazard_unit->WriteReg_mem(WriteReg_mem);
@@ -416,7 +418,7 @@ void mips::buildArchitecture(void){
       hazard_unit->RegWrite_wb(RegWrite_wb);
       hazard_unit->enable_pc(enable_pc);
       hazard_unit->enable_ifid(enable_ifid);
-      hazard_unit->reset_idexe(reset_haz_idexe);
+      hazard_unit->reset_haz_idexe(reset_haz_idexe);
       hazard_unit->enable_idexe(enable_idexe);
       hazard_unit->enable_exmem(enable_exmem);
       hazard_unit->MemRead_exe(MemRead_exe); 
@@ -428,9 +430,9 @@ void mips::buildArchitecture(void){
       hazard_unit->BranchTaken(BranchTaken); 
       hazard_unit->rt_id2(rt_id2); 
       hazard_unit->rs_id2(rs_id2);
-    //  hazard_unit->rd_id2(rd_id2);
+      hazard_unit->rd_id2(rd_id2);
       hazard_unit->enable_idid2(enable_idid2);
-      hazard_unit->reset_ifid(reset_ifid);
+      hazard_unit->reset_haz_ifid(reset_haz_ifid);
       hazard_unit->reset_idid2(reset_idid2);
 
    } 

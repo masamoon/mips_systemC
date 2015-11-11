@@ -197,7 +197,7 @@ MIPSarchCanvas::MIPSarchCanvas(mips &m, QObject *parent) : Q3Canvas(parent), mip
     portVal->setColor(QColor("blue"));
     portValVec.push_back(portVal);
 
-    portVal=new PortValItem(this,mips1.hazard_unit->reset_idexe, "reset_haz_idexe");
+    portVal=new PortValItem(this,mips1.hazard_unit->reset_haz_idexe, "reset_haz_idexe");
     portVal->move(280,422);
     portVal->setColor(QColor("blue"));
     portValVec.push_back(portVal);

@@ -18,9 +18,9 @@ void hazard::detect_hazard()
 				enable_ifid.write(false);
 				enable_idid2.write(false);
 				enable_regfile.write(false);	
-				reset_ifid.write(false);
+				reset_haz_ifid.write(false);
 				reset_idid2.write(false);
-				reset_idexe.write(true);
+				reset_haz_idexe.write(true);
 				reset_exmem.write(false);
 				reset_memwb.write(false);
 
@@ -33,8 +33,8 @@ void hazard::detect_hazard()
 				enable_regfile.write(true);
                 enable_ifid.write(true);
                 reset_idid2.write(false);
-				reset_idexe.write(false);
-				reset_ifid.write(true);
+				reset_haz_idexe.write(false);
+				reset_haz_ifid.write(true);
 				reset_exmem.write(false);
 				reset_memwb.write(false);
                 
@@ -49,9 +49,9 @@ void hazard::detect_hazard()
 		enable_ifid.write(true);
 		enable_idid2.write(true);
 		enable_regfile.write(true);
-		reset_idexe.write(false);
+		reset_haz_idexe.write(false);
 		reset_idid2.write(false);
-		reset_ifid.write(false);
+		reset_haz_ifid.write(false);
 		reset_exmem.write(false);
 		reset_memwb.write(false);
 

@@ -116,7 +116,7 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
 
     //hazard unit 
     ModView *hazard_unitView=new ModView("hazard_unit",viewport());
-    hazard_unitView->addPort(mips1.hazard_unit->reset_idexe, "reset idex");
+    hazard_unitView->addPort(mips1.hazard_unit->reset_haz_idexe, "reset idex");
     hazard_unitView->addPort(mips1.hazard_unit->enable_idexe, "enable_idex");
     hazard_unitView->addPort(mips1.hazard_unit->reset_exmem, "reset_exmem");
     hazard_unitView->addPort(mips1.hazard_unit->enable_exmem, "enable_exmem");

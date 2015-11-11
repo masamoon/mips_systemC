@@ -177,6 +177,7 @@ SC_MODULE(mips) {
    sc_signal <bool> enable_idid2;
    sc_signal < sc_uint<5> > rs_id2; 
    sc_signal < sc_uint<5> > rt_id2; 
+   sc_signal < sc_uint<5> > rd_id2;
   // sc_in  < sc_uint<32> > imm_id, PC4_id, PC_id;
    sc_signal < sc_uint<32> > PC4_id2, PC_id2; 
    sc_signal < sc_uint<16> > imm_id2;
