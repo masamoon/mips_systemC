@@ -151,8 +151,8 @@ void mips::buildID2(void)
 
       
       mr->sel(RegDst);
-      mr->din0(rt);
-      mr->din1(rd);
+      mr->din0(rt_id2);
+      mr->din1(rd_id2);
       mr->dout(WriteReg);
       
        // 16 to 32 bit signed Immediate extension
@@ -407,9 +407,6 @@ void mips::buildArchitecture(void){
       buildWB();
 
       hazard_unit = new hazard("hazard_unit");
-      hazard_unit->rs( rs );
-      hazard_unit->rt( rt );
-      hazard_unit->rd( rd );
       hazard_unit->WriteReg_exe(WriteReg_exe);
       hazard_unit->RegWrite_exe(RegWrite_exe);
       hazard_unit->WriteReg_mem(WriteReg_mem);
@@ -421,19 +418,19 @@ void mips::buildArchitecture(void){
       hazard_unit->reset_haz_idexe(reset_haz_idexe);
       hazard_unit->enable_idexe(enable_idexe);
       hazard_unit->enable_exmem(enable_exmem);
-      hazard_unit->MemRead_exe(MemRead_exe); 
+
+      hazard_unit->MemRead_exe(MemRead_exe); //não seŕa apenas um sinal MemRead
       hazard_unit->MemRead_mem(MemRead_mem); 
-      hazard_unit->enable_regfile(enable_regfile); 
-      hazard_unit->reset_regfile(reset_regfile ); 
-      hazard_unit->reset_exmem(reset_exmem);
-      hazard_unit->reset_memwb(reset_memwb);
-      hazard_unit->BranchTaken(BranchTaken); 
-      hazard_unit->rt_id2(rt_id2); 
-      hazard_unit->rs_id2(rs_id2);
-      hazard_unit->rd_id2(rd_id2);
+      //hazard_unit->enable_regfile(enable_regfile); 
+      //hazard_unit->reset_regfile(reset_regfile ); 
+      hazard_unit->reset_exmem(reset_exmem); // não será reset_haz_exmem
+      hazard_unit->reset_memwb(reset_memwb); // não será reset_haz_memwb
+      hazard_unit->BranchTaken(BranchTaken);
+      hazard_unit->rt(rt_id2); 
+      hazard_unit->rs(rs_id2);
       hazard_unit->enable_idid2(enable_idid2);
       hazard_unit->reset_haz_ifid(reset_haz_ifid);
-      hazard_unit->reset_idid2(reset_idid2);
+      hazard_unit->reset_idid2(reset_idid2); // não será reset_idid2 
 
    } 
 

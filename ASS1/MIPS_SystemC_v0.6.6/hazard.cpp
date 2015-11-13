@@ -17,7 +17,7 @@ void hazard::detect_hazard()
                 enable_pc.write(false);
 				enable_ifid.write(false);
 				enable_idid2.write(false);
-				enable_regfile.write(false);	
+			//	enable_regfile.write(false);	
 				reset_haz_ifid.write(false);
 				reset_idid2.write(false);
 				reset_haz_idexe.write(true);
@@ -30,7 +30,7 @@ void hazard::detect_hazard()
 	}else if ( BranchTaken.read() ) {
                 enable_pc.write(true);
             	enable_idid2.write(true);
-				enable_regfile.write(true);
+			//	enable_regfile.write(true);
                 enable_ifid.write(true);
                 reset_idid2.write(false);
 				reset_haz_idexe.write(false);
@@ -48,7 +48,7 @@ void hazard::detect_hazard()
         enable_pc.write(true);
 		enable_ifid.write(true);
 		enable_idid2.write(true);
-		enable_regfile.write(true);
+	//	enable_regfile.write(true);
 		reset_haz_idexe.write(false);
 		reset_idid2.write(false);
 		reset_haz_ifid.write(false);
