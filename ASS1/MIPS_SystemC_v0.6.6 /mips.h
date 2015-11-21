@@ -95,6 +95,8 @@ SC_MODULE(mips) {
 
    //MEM
    dmem              *datamem;   // data memory
+   mux< sc_uint<32> > *memmux;    //mux that selects value to write on memory 
+   mux< sc_uint<32> > *datamem_mux; 
    //andgate *a1;                  // beq instruction and equal values
    orgate *or_reset_exmem;
    //WB
@@ -175,6 +177,8 @@ SC_MODULE(mips) {
 	
    sc_signal < sc_uint<5> > rs_exe;
    sc_signal < sc_uint<5> > rt_exe; 
+
+   sc_signal < sc_uint<32> > regb_fwd; 
    //sc_signal <bool> Branch_exe;
    
    // the following two signals are not used by the architecture
@@ -185,9 +189,14 @@ SC_MODULE(mips) {
    //MEM
    sc_signal < sc_uint<32> > MemOut;   // data memory output
    sc_signal < sc_uint<32> > ALUOut_mem;//, BranchTarget_mem;   
-   sc_signal < sc_uint<5> > WriteReg_mem;   
+   sc_signal < sc_uint<5> > WriteReg_mem;
+   sc_signal < sc_uint<5> > rt_mem; 
+   sc_signal < sc_uint<32> > MemWrite_mux;    
    sc_signal <bool> MemRead_mem, MemWrite_mem, MemtoReg_mem;
    sc_signal <bool> RegWrite_mem;
+   sc_signal <bool> mux_mem_sel; 
+   sc_signal <bool> mux_dmem_sel; 
+   sc_signal < sc_uint<32> > datamem_mux_out; 
    //sc_signal <bool> Branch_mem, Zero_mem;
 
    // the following two signals are not used by the architecture
@@ -200,7 +209,9 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<5> > WriteReg_wb;   
    sc_signal <bool> MemtoReg_wb;
    sc_signal <bool> RegWrite_wb;
-
+   sc_signal <bool> MemWrite_wb; 
+   sc_signal <bool> RegToMem_wb; 
+  
    // the following two signals are not used by the architecture
    // they are used only for visualization purposes
    sc_signal < sc_uint<32> > PC_wb;   

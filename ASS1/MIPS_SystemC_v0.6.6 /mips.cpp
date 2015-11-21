@@ -88,7 +88,17 @@ void mips::buildID2(void) {
       mr->din0(rt_id2);
       mr->din1(rd_id2);
       mr->dout(WriteReg);
-   
+
+
+
+      //Selects Register to Write
+     /* mr = new mux3alu("muxRDst"); 
+      mr->sel(RegDst);
+      mr->din0(rt_id2);
+      mr->din1(rd_id2); 
+      mr->din2(); 
+      mr->dout(WriteReg); */
+
       // 16 to 32 bit signed Immediate extension
       e1 = new ext("ext");
       e1->din(imm_id2);
@@ -172,8 +182,14 @@ void mips::buildEXE(void)
       m2alu -> sel1(ALUSrc_exe);
       m2alu -> sel2(mux_alu2);  
       m2alu -> dout(ALUIn2); 
-       
-
+        
+     //selects regb data 
+     memmux = new mux< sc_uint<32> >("muxregb");
+     memmux -> din0(regb_exe);
+     memmux -> din1(WriteVal);
+     memmux -> dout(regb_fwd);
+     memmux -> sel(mux_mem_sel);
+     
      /* m1->sel(ALUSrc_exe);
       m1->din0(regb_exe);
       m1->din1(imm_exe);
@@ -182,16 +198,22 @@ void mips::buildEXE(void)
       fwd = new forward("forward"); 
       fwd->rs(rs_exe); 
       fwd->rt(rt_exe);
+      fwd->rt_mem(rt_mem); 
       fwd-> RegWrite_mem(RegWrite_mem); 
       fwd-> RegWrite_wb(RegWrite_wb);
       fwd-> WriteReg_mem(WriteReg_mem);  
       fwd-> WriteReg_wb(WriteReg_wb);    
-      fwd-> MemRead(MemRead); 
+      fwd-> MemRead(MemRead);
+      fwd-> MemWrite_exe(MemWrite_exe); 
+      fwd-> MemWrite_mem(MemWrite_mem);  
+      fwd-> MemWrite_wb(MemWrite_wb);
+      fwd-> MemToReg_wb(MemtoReg_wb);	 
       fwd-> mux_alu1(mux_alu1);
-      fwd-> mux_alu2(mux_alu2);  
+      fwd-> mux_alu2(mux_alu2);
+      fwd-> mux_mem(mux_mem_sel);  
+      fwd-> mux_dmem(mux_dmem_sel); 
 
-
-
+	 
       // ALU
       alu1 = new alu("alu");
 
@@ -208,16 +230,27 @@ void mips::buildEXE(void)
  */
 void mips::buildMEM(void)
 {
+
+    //mux chooses source of memwrite 
+
+     datamem_mux = new mux< sc_uint<32> >("muxMem");
+     datamem_mux->sel(mux_dmem_sel); 
+     datamem_mux->din0(regb_mem); 
+     datamem_mux->din1(WriteVal); 
+     datamem_mux->dout(datamem_mux_out); 
+
       // Data Memory
       datamem = new dmem ("datamem");
    
       datamem->addr(ALUOut_mem);
-      datamem->din(regb_mem);
+      datamem->din(datamem_mux_out);
       datamem->dout(MemOut);
       datamem->wr(MemWrite_mem);
       datamem->rd(MemRead_mem);
       datamem->clk(clk);
 
+
+     
 /*
       // Enables Branch
       a1 = new andgate ("a1");
@@ -226,6 +259,8 @@ void mips::buildMEM(void)
       a1->din2(Zero_mem);
       a1->dout(BranchTaken);
 */
+
+
 }
 
 /**
@@ -377,7 +412,9 @@ void mips::buildArchitecture(void){
       //reg_exe_mem->Zero_mem(Zero_mem);
       //reg_exe_mem->BranchTarget_exe(BranchTarget);
       //reg_exe_mem->BranchTarget_mem(BranchTarget_mem);
-      reg_exe_mem->regb_exe(regb_exe);
+      reg_exe_mem->rt_exe(rt_exe);
+      reg_exe_mem->rt_mem(rt_mem); 
+      reg_exe_mem->regb_exe(regb_fwd);
       reg_exe_mem->regb_mem(regb_mem);
       reg_exe_mem->WriteReg_exe(WriteReg_exe);
       reg_exe_mem->WriteReg_mem(WriteReg_mem);
@@ -404,6 +441,8 @@ void mips::buildArchitecture(void){
       reg_mem_wb->memOut_wb(MemOut_wb);
       reg_mem_wb->MemtoReg_mem(MemtoReg_mem);
       reg_mem_wb->MemtoReg_wb(MemtoReg_wb);
+      reg_mem_wb->MemWrite_mem(MemWrite_mem);
+      reg_mem_wb->MemWrite_wb(MemWrite_wb); 
       reg_mem_wb->RegWrite_mem(RegWrite_mem);
       reg_mem_wb->RegWrite_wb(RegWrite_wb);
       reg_mem_wb->WriteReg_mem(WriteReg_mem);

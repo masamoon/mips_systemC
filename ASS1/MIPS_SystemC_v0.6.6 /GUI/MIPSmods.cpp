@@ -23,8 +23,8 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     //resize viewport
     resizeContents(820+5,194+5);
 
-    resize( QSize(1500+10,250+10) ); 
-    setMaximumSize( QSize(1500+10,250+10) ); 
+    resize( QSize(1900+10,250+10) ); 
+    setMaximumSize( QSize(1900+10,250+10) ); 
 
     setIcon(QPixmap("mips.xpm"));
 
@@ -115,7 +115,7 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
 
 
 
-    //hazview
+    //fwdview
     ModView *fwdview=new ModView("forward",viewport());
     fwdview->addPort(mips1.fwd->rs, "rs");
     fwdview->addPort(mips1.fwd->rt, "rt");
@@ -132,6 +132,41 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     addChild(fwdview,5+MODSTEPX*7,5);
     
     connect(this,SIGNAL(updateModules()), fwdview, SLOT(redrawModule()));
+
+
+    //muxalu2
+    ModView *malu2view = new ModView("malu2",viewport());
+    malu2view->addPort(mips1.m2alu->sel1,"sel1");
+    malu2view->addPort(mips1.m2alu->sel2,"sel2");
+    malu2view->addPort(mips1.m2alu->dout,"dout");
+    
+   
+    addChild(malu2view,5+MODSTEPX*8,5);
+    
+    connect(this,SIGNAL(updateModules()), malu2view, SLOT(redrawModule()));
+    
+    //muxmem
+    ModView *muxmemview = new ModView("mmem",viewport());
+    muxmemview->addPort(mips1.memmux->din0, "din0");
+    muxmemview->addPort(mips1.memmux->din1, "din1");
+    muxmemview->addPort(mips1.memmux->sel, "sel"); 
+    muxmemview->addPort(mips1.memmux->dout, "dout");
+
+   addChild(muxmemview,5+MODSTEPX*9,5);
+    
+    connect(this,SIGNAL(updateModules()), muxmemview, SLOT(redrawModule()));
+
+   //muxdmem
+   ModView *muxdmemview = new ModView("dmemmu",viewport());
+   muxdmemview->addPort(mips1.datamem_mux->din0, "din0");
+   muxdmemview->addPort(mips1.datamem_mux->din1, "din1"); 
+   muxdmemview->addPort(mips1.datamem_mux->sel, "sel"); 
+   muxdmemview->addPort(mips1.datamem_mux->dout, "dout");
+
+   addChild(muxdmemview,5+MODSTEPX*10,5);
+    
+    connect(this,SIGNAL(updateModules()), muxdmemview, SLOT(redrawModule()));
+
 
     ModView *ctrl2view =new ModView("ctrl2",viewport());
     ctrl2view->addPort(mips1.ctrl2->le, "le");
