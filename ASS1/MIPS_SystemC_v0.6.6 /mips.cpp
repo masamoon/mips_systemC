@@ -134,10 +134,28 @@ void mips::buildID2(void) {
 
       */
 
+
+      //selects comparator entry (depending if forward is needed) 
+
+      muxcomp1 = new mux3alu< sc_uint<32> >("muxcomp1"); 
+      muxcomp1 -> din0(regdata1); 
+      muxcomp1 -> din1(ALUOut_mem);
+      muxcomp1 -> din2(WriteVal); 
+      muxcomp1 -> sel(sel_mux_c1);
+      muxcomp1 -> dout(regdata1_fwd);
+     
+      muxcomp2 = new mux3alu< sc_uint<32> >("muxcomp2"); 
+      muxcomp2 -> din0(regdata2); 
+      muxcomp2 -> din1(ALUOut_mem); 
+      muxcomp2 -> din2(WriteVal); 
+      muxcomp2 -> sel(sel_mux_c2); 
+      muxcomp2 -> dout(regdata2_fwd);
+     
+
       // Comparator
       comp = new comparator("comparator");
-      comp->din0(regdata1);
-      comp->din1(regdata2);
+      comp->din0(regdata1_fwd);
+      comp->din1(regdata2_fwd);
       comp->gr(gr);
       comp->le(le);
       comp->eq(eq);
@@ -196,6 +214,8 @@ void mips::buildEXE(void)
       m1->dout(ALUIn2);*/
       
       fwd = new forward("forward"); 
+      fwd->rs_id2(rs_id2);
+      fwd->rt_id2(rt_id2);
       fwd->rs(rs_exe); 
       fwd->rt(rt_exe);
       fwd->rt_mem(rt_mem); 
@@ -208,10 +228,14 @@ void mips::buildEXE(void)
       fwd-> MemWrite_mem(MemWrite_mem);  
       fwd-> MemWrite_wb(MemWrite_wb);
       fwd-> MemToReg_wb(MemtoReg_wb);	 
+      fwd-> jbr(jbr); 
       fwd-> mux_alu1(mux_alu1);
       fwd-> mux_alu2(mux_alu2);
       fwd-> mux_mem(mux_mem_sel);  
       fwd-> mux_dmem(mux_dmem_sel); 
+      fwd-> mux_comp1_sel(sel_mux_c1);
+      fwd-> mux_comp2_sel(sel_mux_c2); 
+
 
 	 
       // ALU

@@ -83,6 +83,8 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<2> > pc_sel;
    sc_signal < sc_uint<32> > JumpTarget;
    jbrcalculator *jbrcalc;
+   mux3alu < sc_uint<32> > *muxcomp1;  //comparator entry mux 
+   mux3alu < sc_uint<32> > *muxcomp2; 
 
    //EXE
    alu               *alu1;      // ALU
@@ -135,7 +137,8 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<32> > regdata1, // value of register rs
                              regdata2, // value of regiter rt
 			     WriteVal; // value to write in register WriteReg
-
+   sc_signal < sc_uint<32> > regdata1_fwd, regdata2_fwd; // output of mux at entry of comparators 
+   sc_signal < sc_uint<2> > sel_mux_c1, sel_mux_c2; // selectors for mux at entry of comparators 
    sc_signal < bool > eq, le, gr; // values given by comparator
    sc_signal < sc_uint<3> > jbr;
    sc_signal < sc_uint<32> > imm_ext;  // imm sign extended

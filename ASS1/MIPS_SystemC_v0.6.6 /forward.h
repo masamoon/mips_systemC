@@ -5,8 +5,8 @@
 SC_MODULE( forward )
 {
   public: 
-    sc_in< sc_uint<5> >  rs, rt,rt_mem; 
-//2
+    sc_in< sc_uint<5> >  rs, rt,rt_mem,rs_id2, rt_id2;  
+//4
     sc_in< bool > RegWrite_mem;
     sc_in< bool > RegWrite_wb;
     sc_in< sc_uint<5> > WriteReg_mem; 
@@ -16,8 +16,9 @@ SC_MODULE( forward )
     sc_in< bool > MemWrite_mem; 
     sc_in< bool > MemWrite_wb; 
     sc_in< bool > MemToReg_wb; 
+    sc_in< sc_uint<3> > jbr; 
 
-    sc_out< sc_uint<2> > mux_alu1,mux_alu2;
+    sc_out< sc_uint<2> > mux_alu1,mux_alu2,mux_comp1_sel, mux_comp2_sel; 
     sc_out< bool> mux_mem, mux_dmem; 
  
 
@@ -28,7 +29,7 @@ SC_MODULE( forward )
     SC_CTOR(forward)
     {      
       SC_METHOD(forwarding);
-      sensitive << rs << rt << RegWrite_mem << RegWrite_wb << WriteReg_mem << WriteReg_wb << MemRead << MemWrite_exe << MemWrite_wb << MemWrite_mem << MemToReg_wb ; 
+      sensitive << rs << rt << rt_mem <<  rs_id2 << rt_id2 << RegWrite_mem << RegWrite_wb << WriteReg_mem << WriteReg_wb << MemRead << MemWrite_exe << MemWrite_wb << MemWrite_mem << MemToReg_wb << jbr; 
 
 
     }

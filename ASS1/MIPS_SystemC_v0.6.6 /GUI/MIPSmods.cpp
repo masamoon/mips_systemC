@@ -119,6 +119,8 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     ModView *fwdview=new ModView("forward",viewport());
     fwdview->addPort(mips1.fwd->rs, "rs");
     fwdview->addPort(mips1.fwd->rt, "rt");
+    fwdview->addPort(mips1.fwd->rs_id2,"rsid2");
+    fwdview->addPort(mips1.fwd->rt_id2,"rtid2");
     fwdview->addPort(mips1.fwd->WriteReg_wb, "wrreg_wb");
     fwdview->addPort(mips1.fwd->MemRead, "MRead");
     fwdview->addPort(mips1.fwd->RegWrite_mem, "regwr_mem");
@@ -129,6 +131,9 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     //fwdview->addPort(mips1.hazard_unit->RegWrite_exe, "RWrite_e");
     fwdview->addPort(mips1.fwd->mux_alu1, "mux1");
     fwdview->addPort(mips1.fwd->mux_alu2, "mux2"); 
+    fwdview->addPort(mips1.fwd->mux_comp1_sel, "mc1");
+    fwdview->addPort(mips1.fwd->mux_comp2_sel, "mc2"); 
+    fwdview->addPort(mips1.fwd->jbr, "jbr");
     addChild(fwdview,5+MODSTEPX*7,5);
     
     connect(this,SIGNAL(updateModules()), fwdview, SLOT(redrawModule()));
@@ -146,7 +151,7 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     connect(this,SIGNAL(updateModules()), malu2view, SLOT(redrawModule()));
     
     //muxmem
-    ModView *muxmemview = new ModView("mmem",viewport());
+/*    ModView *muxmemview = new ModView("mmem",viewport());
     muxmemview->addPort(mips1.memmux->din0, "din0");
     muxmemview->addPort(mips1.memmux->din1, "din1");
     muxmemview->addPort(mips1.memmux->sel, "sel"); 
@@ -155,6 +160,32 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
    addChild(muxmemview,5+MODSTEPX*9,5);
     
     connect(this,SIGNAL(updateModules()), muxmemview, SLOT(redrawModule()));
+*/
+
+    ModView *muxcomp1view = new ModView("mcomp1",viewport());
+    muxcomp1view->addPort(mips1.muxcomp1->din0, "din0");
+    muxcomp1view->addPort(mips1.muxcomp1->din1, "din1");
+    muxcomp1view->addPort(mips1.muxcomp1->din2, "din2");	
+    muxcomp1view->addPort(mips1.muxcomp1->sel, "sel"); 
+    muxcomp1view->addPort(mips1.muxcomp1->dout, "dout");
+
+   addChild(muxcomp1view,5+MODSTEPX*9,5);
+    
+    connect(this,SIGNAL(updateModules()), muxcomp1view, SLOT(redrawModule()));
+
+
+    ModView *muxcomp2view = new ModView("mcomp2",viewport());
+    muxcomp2view->addPort(mips1.muxcomp2->din0, "din0");
+    muxcomp2view->addPort(mips1.muxcomp2->din1, "din1");
+    muxcomp2view->addPort(mips1.muxcomp2->din2, "din2"); 
+    muxcomp2view->addPort(mips1.muxcomp2->sel, "sel"); 
+    muxcomp2view->addPort(mips1.muxcomp2->dout, "dout");
+
+   addChild(muxcomp2view,5+MODSTEPX*11,5);
+    
+    connect(this,SIGNAL(updateModules()), muxcomp2view, SLOT(redrawModule()));
+
+
 
    //muxdmem
    ModView *muxdmemview = new ModView("dmemmu",viewport());
