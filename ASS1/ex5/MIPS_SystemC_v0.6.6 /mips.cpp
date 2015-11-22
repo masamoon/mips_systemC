@@ -497,6 +497,7 @@ void mips::buildArchitecture(void){
       hazard_unit->WriteReg_mem(WriteReg_mem);
       hazard_unit->RegWrite_mem(RegWrite_mem);
       hazard_unit->RegWrite_wb(RegWrite_wb);
+      hazard_unit->MemWrite(MemWrite);
       hazard_unit->enable_pc(enable_pc);
       hazard_unit->enable_ifid(enable_ifid);
       hazard_unit->enable_id1id2(enable_id1id2);
