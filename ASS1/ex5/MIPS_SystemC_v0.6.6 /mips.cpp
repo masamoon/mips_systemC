@@ -490,6 +490,7 @@ void mips::buildArchitecture(void){
       hazard_unit = new hazard("hazard_unit");
       hazard_unit->rs( rs_id2);
       hazard_unit->rt( rt_id2 );
+      hazard_unit->jbr(jbr); 
       hazard_unit->WriteReg_exe(WriteReg_exe);
       hazard_unit->WriteReg_wb(WriteReg_wb);
       hazard_unit->RegWrite_exe(RegWrite_exe);

@@ -29,7 +29,8 @@ SC_MODULE( hazard )
 {
   public: 
     sc_in< sc_uint<5> >  rs;
-    sc_in< sc_uint<5> >  rt;        
+    sc_in< sc_uint<5> >  rt;   
+    sc_in< sc_uint<3> > jbr;      
     sc_in< bool > MemRead,MemRead_exe; 
     sc_in< sc_uint<5> >  WriteReg_exe, WriteReg_mem, WriteReg_wb;        
     sc_in< bool >  RegWrite_exe, RegWrite_mem, RegWrite_wb;        
@@ -39,7 +40,7 @@ SC_MODULE( hazard )
     SC_CTOR(hazard)
     {      
         SC_METHOD(detect_hazard);
-        sensitive << rs << rt 
+        sensitive << rs << rt << jbr
 		  << WriteReg_exe << RegWrite_exe << WriteReg_wb 
 		  << WriteReg_mem << RegWrite_mem << RegWrite_wb
 		  << MemRead<< MemRead_exe  

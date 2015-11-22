@@ -7,10 +7,13 @@
 void hazard::detect_hazard()
 {
 	//data hazards
-	if( //rs.read()!=0 && rs.read()==WriteReg_exe.read() && RegWrite_exe.read()==true
+	if( rt.read()!= 0 && rt.read()==WriteReg_exe.read() && jbr.read() != 0 
+	    || rs.read()!= 0 && rs.read() == WriteReg_exe.read() && jbr.read()!= 0 
+		//rs.read()!=0 && rs.read()==WriteReg_exe.read() && RegWrite_exe.read()==true
 	    //|| rs.read()!=0 && rs.read()==WriteReg_mem.read() && RegWrite_mem.read()==true
 	    //|| rs.read()!=0 && rs.read()==WriteReg_wb.read() && RegWrite_wb.read()==true
-	    /*||*/ rt.read()!=0 && rt.read()==WriteReg_exe.read() && RegWrite_exe.read()==true && MemRead_exe.read() == true) // no caso do lw  
+	       || rt.read()!=0 && rt.read()==WriteReg_exe.read() && RegWrite_exe.read()==true && MemRead_exe.read() == true // no caso do lw  
+	       || rs.read()!= 0 && rs.read() && WriteReg_exe.read() && RegWrite_exe.read()== true && MemRead_exe.read() == true)	
 	    //|| rt.read()!=0 && rt.read()==WriteReg_mem.read() && RegWrite_mem.read()==true && MemRead.read() == false)
             //|| rt.read()!=0 && rt.read()==WriteReg_wb.read() && RegWrite_wb.read()==true)
 		{
