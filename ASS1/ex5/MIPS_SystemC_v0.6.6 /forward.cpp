@@ -30,12 +30,19 @@ void forward::forwarding()
 		if(MemToReg_wb.read() && MemWrite_mem.read() && rt_mem.read() != 0 && rt_mem.read() == WriteReg_wb.read()) //store word + load word MEM para WB 
 			mux_dmem.write(1);
 	
+		if(rt_id2.read() != 0 && rt_id2.read() == WriteReg_wb.read() && RegWrite_wb.read()) // wb para id2
+			mux_comp2_sel.write(2);
+	 		
+		if(rs_id2.read() != 0 && rs_id2.read() == WriteReg_wb.read() && RegWrite_wb.read()) // wb para id2
+		 	mux_comp1_sel.write(2);
+
 		if(jbr.read() != 0 && rs_id2.read() == WriteReg_wb.read() && RegWrite_wb.read()) // branch -> ID2 to WB (rs)
 			mux_comp1_sel.write(2); 
 			
 		if(jbr.read() != 0 && rt_id2.read() == WriteReg_wb.read() && RegWrite_wb.read()) // branch -> ID2 to WB (rt)
 			mux_comp2_sel.write(2); 				
 	
+		
 		if(jbr.read() && rt_id2.read() == WriteReg_mem.read() && RegWrite_mem.read()) // branch -> ID2 to MEM (rt)
 			mux_comp2_sel.write(1); 
 		

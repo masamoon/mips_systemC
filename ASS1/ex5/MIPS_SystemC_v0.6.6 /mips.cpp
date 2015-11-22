@@ -375,9 +375,9 @@ void mips::buildArchitecture(void){
 
       //reg_id_exe
       reg_id_exe = new reg_id_exe_t("reg_id_exe");
-      reg_id_exe->rega_id(regdata1);
+      reg_id_exe->rega_id(regdata1_fwd);
       reg_id_exe->rega_exe(rega_exe);
-      reg_id_exe->regb_id(regdata2);
+      reg_id_exe->regb_id(regdata2_fwd);
       reg_id_exe->regb_exe(regb_exe);
       reg_id_exe->rs_id(rs_id2);
       reg_id_exe->rt_id(rt_id2);

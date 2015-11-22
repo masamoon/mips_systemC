@@ -11,8 +11,8 @@ void hazard::detect_hazard()
 	    || rs.read()!= 0 && rs.read() == WriteReg_exe.read() && jbr.read()!= 0 // branch data dependency 
 	    || rs.read()!= 0 && rs.read() == WriteReg_exe.read() && jbr.read()!= 0 && MemRead_exe.read() == true // branch data dependency with lw 
 	    || rt.read()!= 0 && rt.read() == WriteReg_exe.read() && jbr.read()!= 0 && MemRead_exe.read() == true 
-	    || rt.read()!= 0 && rt.read() == WriteReg_mem.read() && jbr.read()!= 0 && RegWrite_mem.read() == true //second bubble for lw branch dependency 
-	    || rs.read()!= 0 && rs.read() == WriteReg_mem.read() && jbr.read()!= 0 && RegWrite_mem.read() == true
+	    || rt.read()!= 0 && rt.read() == WriteReg_mem.read() && jbr.read()!= 0 && RegWrite_mem.read() == true && MemWrite.read() == false  //second bubble for lw branch dependency 
+	    || rs.read()!= 0 && rs.read() == WriteReg_mem.read() && jbr.read()!= 0 && RegWrite_mem.read() == true && MemWrite.read() == false 
 		//rs.read()!=0 && rs.read()==WriteReg_exe.read() && RegWrite_exe.read()==true
 	    //|| rs.read()!=0 && rs.read()==WriteReg_mem.read() && RegWrite_mem.read()==true
 	    //|| rs.read()!=0 && rs.read()==WriteReg_wb.read() && RegWrite_wb.read()==true
